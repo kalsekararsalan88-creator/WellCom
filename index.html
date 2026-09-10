@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WellCom — Simple. Fast. Useful.</title>
+<meta name="description" content="WellCom provides simple PDF, image and QR utility tools.">
+<style>
+:root{--bg:#f7f8fc;--card:#fff;--text:#141827;--muted:#697386;--line:#e6e9f0;--brand:#5b5bd6;--brand2:#4545bd;--shadow:0 14px 40px rgba(22,28,45,.08)}
+[data-theme=dark]{--bg:#0f1117;--card:#171a22;--text:#f4f6fb;--muted:#a4adbf;--line:#292e39;--brand:#7a7af2;--brand2:#6262e5;--shadow:0 14px 40px rgba(0,0,0,.25)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;transition:.2s}
+header{height:72px;background:color-mix(in srgb,var(--card) 94%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(22px,calc((100% - 1180px)/2));position:sticky;top:0;z-index:20}
+.logo{font-size:25px;font-weight:850;letter-spacing:-.8px}.logo span{color:var(--brand)}
+.actions{display:flex;gap:8px;align-items:center}.themeToggle{height:42px;padding:0 10px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;display:flex;align-items:center;gap:6px;cursor:pointer}.themeToggle .sun,.themeToggle .moon{font-size:15px;opacity:.6}.themeToggle .track{width:38px;height:22px;border-radius:99px;background:#dfe3eb;position:relative;transition:.2s}.themeToggle .knob{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 4px #0003;transition:.2s}.themeToggle.dark .track{background:var(--brand)}.themeToggle.dark .knob{left:19px}.iconbtn{width:42px;height:42px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;font-size:19px;cursor:pointer}
+.menu{position:absolute;right:max(18px,calc((100% - 1180px)/2));top:62px;width:190px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:7px;box-shadow:var(--shadow);display:none}.menu button{width:100%;border:0;background:transparent;color:var(--text);padding:11px;border-radius:9px;text-align:left;cursor:pointer}.menu button:hover{background:var(--bg)}
+.hero{max-width:900px;margin:auto;text-align:center;padding:72px 20px 40px}.badge{display:inline-flex;gap:7px;align-items:center;padding:7px 12px;border:1px solid var(--line);background:var(--card);border-radius:99px;color:var(--muted);font-size:13px;font-weight:650}.hero h1{font-size:clamp(40px,7vw,66px);line-height:1.03;margin:19px 0 13px;letter-spacing:-2.5px}.hero h1 span{color:var(--brand)}.hero p{color:var(--muted);font-size:17px;margin:0 auto 28px;max-width:590px}
+.search{max-width:650px;margin:auto;position:relative}.search input{width:100%;padding:17px 52px 17px 18px;border:1px solid var(--line);border-radius:15px;background:var(--card);color:var(--text);font-size:15px;outline:none;box-shadow:var(--shadow)}.search input:focus{border-color:var(--brand)}.search button{position:absolute;right:7px;top:7px;width:40px;height:40px;border:0;border-radius:10px;background:var(--brand);color:#fff;cursor:pointer}
+.wrap{max-width:1180px;margin:auto;padding:20px}.section-head{display:flex;align-items:end;justify-content:space-between;margin:25px 0 14px}.section-head h2{margin:0;font-size:22px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:0 5px 20px rgba(20,25,40,.035);transition:.18s;cursor:pointer}.card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}.ico{font-size:28px}.card h3{font-size:16px;margin:13px 0 6px}.card p{font-size:13px;color:var(--muted);min-height:35px;line-height:1.45;margin:0 0 16px}.open{width:100%;padding:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:10px;font-weight:700;cursor:pointer}.card:hover .open{background:var(--brand);color:white;border-color:var(--brand)}
+.info{margin:38px 0;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.info strong{display:block;margin-bottom:5px}.info span{font-size:13px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:28px 20px;color:var(--muted);font-size:13px;text-align:center;margin-top:35px}
+.modal{position:fixed;inset:0;background:rgba(8,10,18,.65);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modalbox{width:min(540px,100%);max-height:90vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow)}.modalhead{display:flex;justify-content:space-between;align-items:center}.modalhead h2{margin:0}.close{border:0;background:var(--bg);color:var(--text);width:35px;height:35px;border-radius:9px;font-size:20px;cursor:pointer}
+.drop{border:2px dashed var(--line);border-radius:15px;padding:28px 15px;text-align:center;margin:18px 0;background:var(--bg)}.drop b{display:block;margin-bottom:7px}.drop small{color:var(--muted)}input[type=file],.field{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text)}.primary{width:100%;padding:12px;border:0;border-radius:11px;background:var(--brand);color:#fff;font-weight:750;cursor:pointer}.primary:hover{background:var(--brand2)}.status{color:var(--muted);font-size:13px;margin-top:10px}.row{display:flex;gap:9px;margin-top:10px}.row>*{flex:1}.qrbox{display:flex;justify-content:center;margin:15px 0}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){header{padding:0 15px}.hero{padding-top:52px}.grid{grid-template-columns:1fr}.info{grid-template-columns:1fr}.hero h1{letter-spacing:-1.5px}.section-head{display:block}}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">Well<span>Com</span></div>
+ <div class="actions">
+  <button class="themeToggle" id="themeToggle" onclick="toggleTheme()" title="Toggle dark mode">
+    <span class="sun">☀</span><span class="track"><span class="knob"></span></span><span class="moon">☾</span>
+  </button>
+  <button class="iconbtn" onclick="toggleMenu()" title="Menu">⋮</button>
+</div>
+ <div class="menu" id="menu"><button onclick="about()">About Us</button><button onclick="privacy()">Privacy</button></div>
+</header>
+
+<section class="hero">
+ <div class="badge">✦ Free online utility tools</div>
+ <h1>Simple. <span>Fast.</span> Useful.</h1>
+ <p>Work with PDFs, images and QR codes in a clean, easy-to-use workspace.</p>
+ <div class="search"><input id="search" placeholder="Search a tool..." oninput="filterTools()"><button onclick="document.getElementById('search').focus()">⌕</button></div>
+</section>
+
+<main class="wrap">
+ <div class="section-head"><div><h2>Fun Tools</h2><p>A little fun between your everyday tasks.</p></div></div>
+ <div class="grid">
+  <article class="card" data-name="check your mood mood fingerprint">
+   <div class="ico">🫵</div><h3>Check Your Mood</h3>
+   <p>Tap your fingerprint and get a random mood emoji.</p>
+   <button class="open" onclick="openTool('mood')">Check Mood</button>
+  </article>
+ </div>
+
+ <div class="section-head"><div><h2>PDF Tools</h2><p>Convert and optimize common documents.</p></div></div>
+ <div class="grid">
+  <article class="card" data-name="pdf word"><div class="ico">📄</div><h3>PDF → Word</h3><p>Turn PDF documents into editable Word files.</p><button class="open" onclick="openTool('pdfword')">Open Tool</button></article>
+  <article class="card" data-name="word pdf"><div class="ico">📝</div><h3>Word → PDF</h3><p>Convert DOC and DOCX documents to PDF.</p><button class="open" onclick="openTool('wordpdf')">Open Tool</button></article>
+  <article class="card" data-name="image pdf"><div class="ico">🖼️</div><h3>Image → PDF</h3><p>Create a PDF from an image.</p><button class="open" onclick="openTool('imgpdf')">Open Tool</button></article>
+  <article class="card" data-name="ppt pdf powerpoint"><div class="ico">📊</div><h3>PPT → PDF</h3><p>Convert PowerPoint presentations to PDF.</p><button class="open" onclick="openTool('pptpdf')">Open Tool</button></article>
+  <article class="card" data-name="pdf compressor"><div class="ico">🗜️</div><h3>PDF Compressor</h3><p>Reduce PDF size for easier sharing.</p><button class="open" onclick="openTool('pdfcompress')">Open Tool</button></article>
+ </div>
+
+ <div class="section-head"><div><h2>Image Tools</h2><p>Quick browser-based image utilities.</p></div></div>
+ <div class="grid">
+  <article class="card" data-name="image compressor"><div class="ico">🖼️</div><h3>Image Compressor</h3><p>Reduce image size while keeping good quality.</p><button class="open" onclick="openTool('imgcompress')">Open Tool</button></article>
+  <article class="card" data-name="jpg png converter"><div class="ico">🔄</div><h3>JPG ↔ PNG</h3><p>Convert between JPG and PNG formats.</p><button class="open" onclick="openTool('convert')">Open Tool</button></article>
+  <article class="card" data-name="image resizer"><div class="ico">📐</div><h3>Image Resizer</h3><p>Resize images to your exact dimensions.</p><button class="open" onclick="openTool('resize')">Open Tool</button></article>
+ </div>
+
+ <div class="section-head"><div><h2>Other Tools</h2><p>Small utilities for everyday tasks.</p></div></div>
+ <div class="grid">
+  <article class="card" data-name="url qr qr code"><div class="ico">🔗</div><h3>URL → QR Code</h3><p>Turn any URL into a downloadable QR code.</p><button class="open" onclick="openTool('qr')">Open Tool</button></article>
+ </div>
+
+ <div class="info">
+  <div><strong>⚡ Fast & Simple</strong><span>Designed for quick everyday tasks without a complicated interface.</span></div>
+  <div><strong>📱 Mobile Friendly</strong><span>Responsive layout built for phones, tablets and desktops.</span></div>
+  <div><strong>🔒 Privacy First</strong><span>Client-side image tools can process files directly in your browser.</span></div>
+ </div>
+</main>
+<footer>© 2026 WellCom. Built for simple, useful online tools.</footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="modalbox">
+ <div class="modalhead"><h2 id="title"></h2><button class="close" onclick="closeModal()">×</button></div>
+ <div id="body"></div>
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const $=x=>document.getElementById(x);
+function setTheme(theme){
+ document.documentElement.dataset.theme=theme==='dark'?'dark':'';
+ localStorage.theme=theme;
+ const b=$('themeToggle'); if(b)b.classList.toggle('dark',theme==='dark');
+}
+function toggleTheme(){setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark')}
+setTheme(localStorage.theme==='dark'?'dark':'light');
+
+const moods=[
+ ['😄','Happy','You are feeling cheerful and positive today!'],
+ ['😂','Playful','Looks like you are in a fun mood!'],
+ ['😎','Cool','Calm, confident and totally in control.'],
+ ['🤩','Excited','Something has your energy level high!'],
+ ['😌','Relaxed','A peaceful mood — take it easy.'],
+ ['🤔','Thoughtful','Your brain seems to be exploring ideas.'],
+ ['🥱','Sleepy','Maybe your mood is asking for a little rest.'],
+ ['😤','Determined','You look ready to get things done!'],
+ ['🥳','Celebratory','Your random mood says: time to celebrate!'],
+ ['🤪','Goofy','Today’s mood is officially a little crazy.']
+];
+function checkMood(){
+ const m=moods[Math.floor(Math.random()*moods.length)];
+ $('finger').style.transform='scale(.94)';
+ setTimeout(()=>{$('finger').style.transform='scale(1)'},130);
+ $('moodEmoji').textContent=m[0];
+ $('moodText').innerHTML='<b>'+m[1]+'</b> — '+m[2];
+}
+function toggleMenu(){$('menu').style.display=$('menu').style.display==='block'?'none':'block'}
+function show(title,body){$('title').textContent=title;$('body').innerHTML=body;$('modal').style.display='flex'}
+function closeModal(){$('modal').style.display='none'}
+function about(){show('About WellCom',`<p>WellCom is a simple online utility platform for everyday PDF, image and QR tasks.</p><p>Our goal is to make common file tasks fast, clean and easy to understand — without unnecessary complexity.</p>`)}
+function privacy(){show('Privacy',`<p>WellCom is designed with privacy in mind. Browser-based image tools can process selected files locally on your device. The Mood tool is a fun randomizer and does not read or store fingerprint data.</p><p>Server-side conversion tools should be connected only after a secure backend and file-retention policy are configured.</p>`)}
+function filterTools(){let q=$('search').value.toLowerCase();document.querySelectorAll('.card').forEach(c=>c.style.display=c.dataset.name.includes(q)?'block':'none')}
+function openTool(t){
+const m={
+mood:['Check Your Mood',`<div style="text-align:center;padding:10px 0 6px">
+  <div id="finger" onclick="checkMood()" style="width:145px;height:145px;margin:12px auto;border:2px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:70px;background:var(--bg);cursor:pointer;box-shadow:inset 0 0 0 8px var(--card);transition:.25s">☝️</div>
+  <h3 id="moodEmoji" style="font-size:42px;margin:8px 0">?</h3>
+  <div id="moodText" class="status">Tap the fingerprint to discover your mood.</div>
+  <button class="primary" style="margin-top:14px" onclick="checkMood()">Check Again</button>
+ </div><div class="status" style="text-align:center;margin-top:15px">Fun feature: this does not read real biometric data; the result is randomly generated.</div>`],
+pdfword:['PDF → Word',`<div class="drop"><b>Upload your PDF</b><small>Choose a PDF file to begin</small><input type="file" accept=".pdf" style="margin-top:14px"></div><div class="status">Production note: reliable PDF→Word conversion needs a server-side document conversion engine.</div>`],
+wordpdf:['Word → PDF',`<div class="drop"><b>Upload your Word file</b><small>DOC or DOCX</small><input type="file" accept=".doc,.docx" style="margin-top:14px"></div><div class="status">Production note: connect a secure DOC/DOCX conversion backend for final PDF generation.</div>`],
+pptpdf:['PPT → PDF',`<div class="drop"><b>Upload your PowerPoint</b><small>PPT or PPTX</small><input type="file" accept=".ppt,.pptx" style="margin-top:14px"></div><div class="status">Production note: connect a presentation conversion backend.</div>`],
+pdfcompress:['PDF Compressor',`<input id="pf" type="file" accept="application/pdf"><button class="primary" style="margin-top:12px" onclick="pdfCopy()">Process PDF</button><div id="ps" class="status"></div>`],
+imgpdf:['Image → PDF',`<input id="if" type="file" accept="image/*"><button class="primary" style="margin-top:12px" onclick="imagePDF()">Create PDF</button><div id="is" class="status"></div>`],
+imgcompress:['Image Compressor',`<input id="ic" type="file" accept="image/*"><div class="row"><label style="color:var(--muted);font-size:13px">Quality <input id="q" type="range" min="10" max="95" value="70" style="width:100%"></label></div><button class="primary" style="margin-top:12px" onclick="imageCompress()">Compress & Download</button><div id="ics" class="status"></div>`],
+convert:['JPG ↔ PNG',`<input id="cv" type="file" accept="image/*"><select id="fm" class="field" style="margin-top:10px"><option value="image/png">Convert to PNG</option><option value="image/jpeg">Convert to JPG</option></select><button class="primary" style="margin-top:12px" onclick="convertImage()">Convert & Download</button><div id="cvs" class="status"></div>`],
+resize:['Image Resizer',`<input id="rs" type="file" accept="image/*"><div class="row"><input id="rw" class="field" type="number" placeholder="Width"><input id="rh" class="field" type="number" placeholder="Height"></div><button class="primary" style="margin-top:12px" onclick="resizeImage()">Resize & Download</button><div id="rss" class="status"></div>`],
+qr:['URL → QR Code',`<input id="qu" class="field" type="url" placeholder="https://example.com"><button class="primary" style="margin-top:12px" onclick="qr()">Generate QR Code</button><div id="qb" class="qrbox"></div><div id="qs" class="status"></div>`]
+};show(m[t][0],m[t][1])}
+function fileData(input){return new Promise((ok,no)=>{let f=input.files[0];if(!f)return no();let r=new FileReader();r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(f)})}
+function dl(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1200)}
+async function imagePDF(){try{let d=await fileData($('if')),im=new Image();im.onload=()=>{let p=new jspdf.jsPDF({unit:'pt',format:'a4',orientation:im.width>im.height?'landscape':'portrait'}),w=p.internal.pageSize.getWidth(),h=p.internal.pageSize.getHeight(),r=Math.min((w-30)/im.width,(h-30)/im.height);p.addImage(d,'JPEG',(w-im.width*r)/2,(h-im.height*r)/2,im.width*r,im.height*r);p.save('wellcom-image.pdf');$('is').textContent='Done — PDF downloaded.'};im.src=d}catch(e){$('is').textContent='Please select an image.'}}
+async function imageCompress(){try{let d=await fileData($('ic')),im=new Image();im.onload=()=>{let c=document.createElement('canvas');c.width=im.width;c.height=im.height;c.getContext('2d').drawImage(im,0,0);c.toBlob(b=>{dl(b,'wellcom-compressed.jpg');$('ics').textContent='Done — compressed image downloaded.'},'image/jpeg',+$('q').value/100)};im.src=d}catch(e){$('ics').textContent='Please select an image.'}}
+async function convertImage(){try{let d=await fileData($('cv')),im=new Image();im.onload=()=>{let c=document.createElement('canvas');c.width=im.width;c.height=im.height;c.getContext('2d').drawImage(im,0,0);let mime=$('fm').value;c.toBlob(b=>{dl(b,mime==='image/png'?'wellcom.png':'wellcom.jpg');$('cvs').textContent='Done — converted image downloaded.'},mime,.9)};im.src=d}catch(e){$('cvs').textContent='Please select an image.'}}
+async function resizeImage(){try{let d=await fileData($('rs')),w=+$('rw').value,h=+$('rh').value;if(!w||!h){$('rss').textContent='Enter width and height.';return}let im=new Image();im.onload=()=>{let c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);c.toBlob(b=>{dl(b,'wellcom-resized.jpg');$('rss').textContent='Done — resized image downloaded.'},'image/jpeg',.9)};im.src=d}catch(e){$('rss').textContent='Please select an image.'}}
+function qr(){let u=$('qu').value.trim();$('qb').innerHTML='';if(!u){$('qs').textContent='Enter a URL.';return}new QRCode($('qb'),{text:u,width:220,height:220});$('qs').textContent='QR generated. Right-click/long-press the code to save it.'}
+async function pdfCopy(){let f=$('pf').files[0];if(!f){$('ps').textContent='Please select a PDF.';return}dl(new Blob([await f.arrayBuffer()],{type:'application/pdf'}),'wellcom-pdf.pdf');$('ps').textContent='A re-saved copy was downloaded. True size optimization needs a PDF optimizer backend.'}
+</script>
+</body>
+</html>
